@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contattaci - NEOmoto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            background-color: #c81c22;
+            color: white;
+            width: 100%;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .left-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            background-color: white;
+            color: #c81c22;
+            font-weight: bold;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #ffeaea;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            padding-top: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .content {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+            flex-grow: 1;
+        }
+
+        .section {
+            background-color: #111;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            color: #c81c22;
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #ccc;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .contact-info a {
+            color: #c81c22;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #111;
+            color: #777;
+            font-size: 14px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="left-title">NEOmoto</div>
+    <div class="nav-buttons">
+        <button onclick="window.location.href='index.html'">🏠 Home</button>
+        <button onclick="window.location.href='carrello.html'">🛒 Carrello</button>
+    </div>
+</header>
+
+<main class="content">
+
+    <div class="section">
+        <h2>La nostra visione</h2>
+        <p>
+            NEOmoto nasce da una passione sfrenata per le due ruote e l’innovazione. La nostra missione è portare sulle strade italiane (e oltre!) le migliori moto ad alte prestazioni, selezionate per offrire potenza, tecnologia e stile.
+            <br><br>
+            Collaboriamo con i migliori marchi internazionali per garantire qualità, sicurezza e un’esperienza di guida superiore.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Contattaci</h2>
+        <p>Hai bisogno di assistenza, informazioni o vuoi semplicemente fare due chiacchiere su moto da sogno? Il nostro team è sempre disponibile!</p>
+        <div class="contact-info">
+            <p><strong>📍 Indirizzo:</strong> Via della Velocità 46, 00100 Roma (RM)</p>
+            <p><strong>📞 Telefono:</strong> +39 06 9876 5432</p>
+            <p><strong>📧 Email supporto:</strong> <a href="mailto:supporto@neomoto.it">supporto@neomoto.it</a></p>
+            <p><strong>📧 Email vendite:</strong> <a href="mailto:vendite@neomoto.it">vendite@neomoto.it</a></p>
+            <p><strong>📧 Email partnership:</strong> <a href="mailto:partnership@neomoto.it">partnership@neomoto.it</a></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Seguici sui social</h2>
+        <p>
+            Rimani aggiornato su nuove uscite, eventi e offerte esclusive.<br>
+            <strong>Instagram:</strong> <a href="#">@neomoto_official</a> <br>
+            <strong>Facebook:</strong> <a href="#">fb.com/neomoto</a> <br>
+            <strong>YouTube:</strong> <a href="#">NEOmoto Channel</a>
+        </p>
+    </div>
+
+</main>
+
+<footer>
+    &copy; 2025 NEOmoto. Tutti i diritti riservati | P.IVA 01234567890
+</footer>
+
+</body>
+</html>

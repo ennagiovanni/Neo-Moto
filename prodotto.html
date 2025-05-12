@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dettagli Prodotto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+  box-sizing: border-box;
+}
+
+.top-bar {
+  background-color: #c81c22;
+  color: white;
+  width: 100%;
+  padding: 15px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.left-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  background-color: white;
+  color: #c81c22;
+  font-weight: bold;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-buttons button:hover {
+  background-color: #ffeaea;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  padding-top: 120px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+</style>
+
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="left-title">NEO-Moto</div>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">🏠 Home</button>
+            <button onclick="window.location.href='carrello.html'">Carrello</button>
+        </div>
+    </header>
+    
+    <div class="product-container" id="product-container">
+        <!-- I contenuti verranno popolati via JS -->
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("product-container");
+            const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    
+            if (product) {
+                container.innerHTML = `
+                    <img class="product-image" src="${product.image}" alt="${product.name}">
+                    <h1 class="product-name">${product.name}</h1>
+                    <p class="product-description">${product.description}</p>
+                    <p class="product-price">${product.price}</p>
+    
+                    <label for="quantity">Quantità:</label>
+                    <input type="number" id="quantity" class="quantity-selector" min="1" value="1">
+    
+                    <button onclick="addToCart()">Aggiungi al Carrello</button>
+                    
+    
+                    <div id="confirmation" class="confirmation"></div>
+                `;
+            } else {
+                container.innerHTML = `<p class="error-message">Nessun prodotto selezionato. Torna alla pagina dei prodotti.</p>`;
+            }
+        });
+    
+        function addToCart() {
+            const product = JSON.parse(localStorage.getItem("selectedProduct"));
+            const quantity = parseInt(document.getElementById("quantity").value, 10);
+    
+            if (!product || quantity <= 0) return;
+    
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existing = cart.find(p => p.name === product.name);
+    
+            if (existing) {
+                existing.quantity = (existing.quantity || 1) + quantity;
+            } else {
+                product.quantity = quantity;
+                cart.push(product);
+            }
+    
+            localStorage.setItem("cart", JSON.stringify(cart));
+            const confirmation = document.getElementById("confirmation");
+            confirmation.textContent = `${product.name} x${quantity} aggiunto al carrello! 🛒`;
+        }
+    </script>
+</body>    
+</html>

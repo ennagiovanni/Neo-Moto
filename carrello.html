@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrello</title>
+    <style>
+        /* Aggiungi stili per il carrello */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .cart-item {
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            background-color: #222;
+            border-radius: 8px;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: auto;
+        }
+
+        .cart-item h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .cart-item p {
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #c81c22;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #c81c22;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* Stili per il pulsante Home */
+        .home-button {
+            background-color: white;
+            color: #c81c22;
+            font-weight: bold;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #ffeaea;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Il Tuo Carrello</h1>
+
+<!-- Pulsante Home -->
+<button class="home-button" onclick="window.location.href='index.html'">🏠 Home</button>
+
+<div id="cart-items"></div>
+
+<div id="total"></div>
+
+<button onclick="clearCart()">Svuota Carrello</button>
+<button onclick="proceedToPayment()">Vai al Pagamento</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartItemsContainer = document.getElementById("cart-items");
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = "<p>Il tuo carrello è vuoto.</p>";
+        } else {
+            let total = 0;
+            cart.forEach(product => {
+                const productElement = document.createElement("div");
+                productElement.classList.add("cart-item");
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Prezzo: ${product.price}</p>
+                `;
+                cartItemsContainer.appendChild(productElement);
+
+                // Parsing sicuro del prezzo (rimuove € e . nei decimali)
+                const numericPrice = parseFloat(
+                    product.price.replace("€", "").replace(".", "").replace(",", ".")
+                );
+                total += numericPrice;
+            });
+
+            // Mostra il totale con due decimali
+            document.getElementById("total").innerHTML = `Totale: €${total.toFixed(2)}`;
+        }
+    });
+
+    // Funzione per svuotare il carrello
+    function clearCart() {
+        localStorage.removeItem("cart");
+        location.reload();
+    }
+
+    // Funzione per procedere al pagamento
+    function proceedToPayment() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length > 0) {
+            // Passa i dati del carrello alla pagina di pagamento
+            localStorage.setItem("paymentCart", JSON.stringify(cart));
+            window.location.href = "pagamento.html"; // Reindirizza alla pagina di pagamento
+        } else {
+            alert("Il carrello è vuoto. Aggiungi articoli per procedere al pagamento.");
+        }
+    }
+</script>
+
+</body>
+</html>
