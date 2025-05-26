@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accesso - NEO-Moto</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -126,8 +124,8 @@
                 // Salva l'utente nel localStorage per la sessione
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
                 
-                // Redirect alla pagina index (1).html
-                window.location.href = "index.html"; // Assicurati che il nome della pagina sia corretto
+                // Redirect alla pagina index
+                window.location.href = "index.html"; 
             } else {
                 errorMessage.textContent = 'Email o password errati.';
             }
