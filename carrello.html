@@ -1,52 +1,57 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrello</title>
+
     <style>
-        /* Aggiungi stili per il carrello */
+        /* Stili generali per la pagina del carrello */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
+            font-family: Arial, sans-serif; /* Font di base */
+            background-color: #000; /* Sfondo nero */
+            color: #fff; /* Testo bianco */
             margin: 0;
             padding: 0;
             text-align: center;
         }
 
+        /* Stili per ciascun elemento del carrello */
         .cart-item {
             padding: 15px;
-            border: 1px solid #ccc;
-            margin: 10px;
-            background-color: #222;
-            border-radius: 8px;
+            border: 1px solid #ccc; /* Bordo grigio chiaro per separare gli articoli */
+            margin: 10px; /* Distanza tra gli articoli */
+            background-color: #222; /* Sfondo grigio scuro per ogni prodotto */
+            border-radius: 8px; /* Angoli arrotondati */
         }
 
+        /* Stili per le immagini dei prodotti nel carrello */
         .cart-item img {
-            width: 100px;
-            height: auto;
+            width: 100px; /* Larghezza fissa dell'immagine */
+            height: auto; /* Altezza automatica per mantenere il rapporto di aspetto */
         }
 
+        /* Stili per il nome del prodotto */
         .cart-item h3 {
             font-size: 18px;
-            margin: 10px 0;
+            margin: 10px 0; /* Distanza sopra e sotto il nome */
         }
 
+        /* Stili per il prezzo del prodotto */
         .cart-item p {
             font-size: 14px;
-            color: #bbb;
+            color: #bbb; /* Colore grigio chiaro per il prezzo */
         }
 
+        /* Stili per la visualizzazione del totale nel carrello */
         .total {
             font-size: 20px;
             font-weight: bold;
-            color: #c81c22;
-            margin-top: 20px;
+            color: #c81c22; /* Colore rosso per il totale */
+            margin-top: 20px; /* Distanza sopra il totale */
         }
 
+        /* Stili per il pulsante generale */
         button {
-            background-color: #c81c22;
+            background-color: #c81c22; /* Colore rosso per il pulsante */
             color: white;
             padding: 12px 20px;
             border: none;
@@ -56,10 +61,10 @@
             margin-top: 20px;
         }
 
-        /* Stili per il pulsante Home */
+        /* Stili per il pulsante Home (che reindirizza alla homepage) */
         .home-button {
-            background-color: white;
-            color: #c81c22;
+            background-color: white; /* Sfondo bianco */
+            color: #c81c22; /* Colore rosso per il testo */
             font-weight: bold;
             padding: 12px 20px;
             border: none;
@@ -67,73 +72,84 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 20px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s; /* Transizione di colore al passaggio del mouse */
         }
 
+        /* Effetto hover per il pulsante Home */
         .home-button:hover {
-            background-color: #ffeaea;
+            background-color: #ffeaea; /* Colore di sfondo più chiaro quando il mouse passa sopra */
         }
     </style>
 </head>
 <body>
 
+<!-- Titolo della pagina -->
 <h1>Il Tuo Carrello</h1>
 
-<!-- Pulsante Home -->
+<!-- Pulsante per tornare alla homepage -->
 <button class="home-button" onclick="window.location.href='index.html'">🏠 Home</button>
 
+<!-- Contenitore per visualizzare gli articoli nel carrello -->
 <div id="cart-items"></div>
 
+<!-- Contenitore per mostrare il totale del carrello -->
 <div id="total"></div>
 
+<!-- Pulsanti per svuotare il carrello o procedere al pagamento -->
 <button onclick="clearCart()">Svuota Carrello</button>
 <button onclick="proceedToPayment()">Vai al Pagamento</button>
 
 <script>
+    // Quando il documento è completamente caricato, esegui il codice
     document.addEventListener("DOMContentLoaded", function () {
+        // Recupera il carrello dal localStorage (se esiste) o inizializza un array vuoto
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         const cartItemsContainer = document.getElementById("cart-items");
 
+        // Se il carrello è vuoto, mostra un messaggio
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<p>Il tuo carrello è vuoto.</p>";
         } else {
-            let total = 0;
+            let total = 0; // Variabile per calcolare il totale del carrello
+            // Cicla su ogni prodotto nel carrello per creare l'elemento HTML per ciascuno
             cart.forEach(product => {
+                // Crea un div per ogni prodotto
                 const productElement = document.createElement("div");
-                productElement.classList.add("cart-item");
+                productElement.classList.add("cart-item"); // Aggiunge la classe CSS per lo stile
                 productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>Prezzo: ${product.price}</p>
+                    <img src="${product.image}" alt="${product.name}"> <!-- Immagine del prodotto -->
+                    <h3>${product.name}</h3> <!-- Nome del prodotto -->
+                    <p>Prezzo: ${product.price}</p> <!-- Prezzo del prodotto -->
                 `;
-                cartItemsContainer.appendChild(productElement);
+                cartItemsContainer.appendChild(productElement); // Aggiunge l'elemento alla pagina
 
-                // Parsing sicuro del prezzo (rimuove € e . nei decimali)
+                // Parsing sicuro del prezzo (rimuove simboli di € e formato numerico errato)
                 const numericPrice = parseFloat(
                     product.price.replace("€", "").replace(".", "").replace(",", ".")
                 );
-                total += numericPrice;
+                total += numericPrice; // Aggiunge il prezzo al totale
             });
 
-            // Mostra il totale con due decimali
+            // Mostra il totale del carrello con due decimali
             document.getElementById("total").innerHTML = `Totale: €${total.toFixed(2)}`;
         }
     });
 
     // Funzione per svuotare il carrello
     function clearCart() {
-        localStorage.removeItem("cart");
-        location.reload();
+        localStorage.removeItem("cart"); // Rimuove il carrello dal localStorage
+        location.reload(); // Ricarica la pagina per aggiornare il contenuto
     }
 
     // Funzione per procedere al pagamento
     function proceedToPayment() {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cart = JSON.parse(localStorage.getItem("cart")) || []; // Recupera il carrello dal localStorage
         if (cart.length > 0) {
-            // Passa i dati del carrello alla pagina di pagamento
-            localStorage.setItem("paymentCart", JSON.stringify(cart));
+            // Se il carrello non è vuoto, passa i dati del carrello alla pagina di pagamento
+            localStorage.setItem("paymentCart", JSON.stringify(cart)); // Salva il carrello nel localStorage
             window.location.href = "pagamento.html"; // Reindirizza alla pagina di pagamento
         } else {
+            // Se il carrello è vuoto, mostra un avviso
             alert("Il carrello è vuoto. Aggiungi articoli per procedere al pagamento.");
         }
     }
